@@ -3,6 +3,7 @@ from time import sleep
 import argparse
 from PIL import Image, ImageDraw
 
+from IT8951 import constants
 from IT8951.display import AutoEPDDisplay
 
 # widgets
@@ -32,12 +33,12 @@ def main():
     print('VCOM set to', display.epd.get_vcom())
 
     print('Initializing buffer...')
-    canvas = Image.new('1', (canvasWidth, canvasHeight), WHITE)
+    canvas = display.frame_buf
     draw = ImageDraw.Draw(canvas)
 
     print_QOD(draw, minX, 1000, canvasWidth)
 
-    display.epd.display(display.epd.getbuffer(canvas))
+    display.draw_full(constants.DisplayModes.GC16)
 
     print('Done!')
 
