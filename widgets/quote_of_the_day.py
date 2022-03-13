@@ -30,13 +30,11 @@ def process_QOD():
     return[qod, qodAuthor]
 
 
-def print_QOD(draw,minx, y,  canvasWidth):
+def print_QOD(draw,x, y,  canvasWidth):
     qodOb=process_QOD()
     print(qodOb)
 
-    xy = get_text_center_tuple(minx +canvasWidth//2, y, qodOb[0])
-    # xy = get_text_center_tuple(minx, y, qodOb[0])
-    # xy = (minx+canvasWidth//2, y)
+    xy = get_text_center_tuple(x +canvasWidth//2, y, qodOb[0])
 
     draw.multiline_text(xy, qodOb[0], font=DEFAULT_FONT, align="center")
     

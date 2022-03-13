@@ -7,6 +7,7 @@ import argparse
 # widgets
 from widgets.hello_world import *
 from widgets.quote_of_the_day import print_QOD
+from widgets.news import print_feeds
 
 minX=30
 minY=10
@@ -31,6 +32,11 @@ def main():
     # print_hello_world_centered(draw, canvasWidth//2, canvasHeight//2, "I keep asking myself these three questions.. What do you have? What do")
 
     print_QOD(draw, minX, 1000, canvasWidth)
+
+    feeds=["https://www.rnz.co.nz/rss/world.xml", "http://feeds.bbci.co.uk/news/rss.xml", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"]
+    # feeds=["https://www.rnz.co.nz/rss/world.xml"]
+    print_feeds(draw, minX, 1100, canvasWidth//2, feeds, "Test")
+
 
     print("Saving Image...")
     canvas.save("display.png")
