@@ -47,5 +47,8 @@ def main():
 
     print('Done!')
 
+    sleep(60)
+    display.clear()
+
 if __name__ == '__main__':
     main()

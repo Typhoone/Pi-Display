@@ -20,22 +20,20 @@ def getTime(publishedTime):
     date = date.astimezone(tz)
     return date
 
-def drawItem(draw, x, y, entry):
-    lineLim = 38
-    numOfLines=5
+def drawItem(draw, x, y, entry, lineLim = 40, numOfLines=5):
     # pprint(item.nzTime.strftime("%a %H:%M %z"))
     # print("------")
-    feedInfo = concat(entry.feedTitle, entry.localTime.strftime("%a %H:%M"))
+    feedInfo = " ".join([entry.feedTitle, entry.localTime.strftime("%a %H:%M")])
     title = textwrap.shorten(entry.summary, lineLim*numOfLines, placeholder="...")
     title = textwrap.fill(title, lineLim)
     draw.multiline_text((x,y), title, font=DEFAULT_FONT, align="left")
     # print(title)
     # print("------")
     numOfLines = title.count('\n')
-    ypos=y + (numOfLines+1.3)*DEFAULT_FONT_SIZE
-    draw.text((x, ypos), feedInfo, font=DEFAULT_FONT, align="left")
+    ypos=y + (numOfLines+1.1)*DEFAULT_FONT_SIZE+15
+    draw.text((x, ypos), feedInfo, font=DEFAULT_FONT, align="center")
 
-    return 4
+    return numOfLines+1
 
 def getLatest(feeds, num = 3):
     items = []
@@ -43,7 +41,7 @@ def getLatest(feeds, num = 3):
         NewsFeed = feedparser.parse(feed)
         for entry in NewsFeed.entries:
 
-            entry.feedTitle = ' '.join(NewsFeed.feed.title.split()[:2])
+            entry.feedTitle = NewsFeed.feed.title.split()[0]
             # TODO: guse this to get favicon
             entry.RSSlink = NewsFeed.feed.link
             entry.localTime=getTime(entry.published)
