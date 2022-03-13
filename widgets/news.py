@@ -20,18 +20,18 @@ def getTime(publishedTime):
     date = date.astimezone(tz)
     return date
 
-def drawItem(draw, x, y, entry, lineLim = 40, numOfLines=5):
+def drawItem(draw, x, y, entry, width, lineLim = 38, numOfLines=4):
     # pprint(item.nzTime.strftime("%a %H:%M %z"))
     # print("------")
     feedInfo = " ".join([entry.feedTitle, entry.localTime.strftime("%a %H:%M")])
     title = textwrap.shorten(entry.summary, lineLim*numOfLines, placeholder="...")
     title = textwrap.fill(title, lineLim)
     draw.multiline_text((x,y), title, font=DEFAULT_FONT, align="left")
-    # print(title)
-    # print("------")
+   
     numOfLines = title.count('\n')
     ypos=y + (numOfLines+1.1)*DEFAULT_FONT_SIZE+15
-    draw.text((x, ypos), feedInfo, font=DEFAULT_FONT, align="center")
+    xy = get_text_right_tuple(x+width-50, ypos, feedInfo)
+    draw.text(xy, feedInfo, font=DEFAULT_FONT)
 
     return numOfLines+1
 
@@ -57,13 +57,13 @@ def print_feeds(draw, x, y, width, feeds, title):
     ypos = y
 
     xy = get_title_text_center_tuple(x+width//2, ypos, title)
-    draw.text(xy, title, font=DEFAULT_TITLE_FONT, align="center")
+    draw.text(xy, title, font=DEFAULT_TITLE_FONT)
 
     ypos = ypos + DEFAULT_TITLE_FONT_SIZE + 10
 
     for item in itemsToPrint:
         print(ypos)
-        totalLines = drawItem(draw, xpos, ypos,item)
+        totalLines = drawItem(draw, xpos, ypos,item, width)
         ypos = ypos + 230
             
 

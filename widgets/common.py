@@ -12,27 +12,32 @@ def draw_centered_text(draw, x, y, text, font=DEFAULT_FONT, fontsize=DEFAULT_FON
     draw.text(xy, text, font=font)
     draw_border(draw, draw_x-10, draw_y-10, text_width+20, fontsize+20)
 
-def get_text_center_tuple(x, y, text, font=DEFAULT_FONT, fontsize=DEFAULT_FONT_SIZE):
+def get_text_center_tuple(x, y, text, font=DEFAULT_FONT):
     text_width = 0
     lines = text.split("\n")
     for line in lines:
-        # line = line.replace("\n", "")
         tmp_width, tmp_hieght = font.getsize(line)
         if tmp_width > text_width:
             text_width = tmp_width
-    
-    text_width
-    print(text_width)
-    print(text)
 
     draw_x = x - text_width//2
-    # draw_y = y + fontsize//2
-    draw_y = y
 
-    return (draw_x, draw_y)
+    return (draw_x, y)
 
-def get_title_text_center_tuple(x, y, text, font=DEFAULT_TITLE_FONT, fontsize=DEFAULT_TITLE_FONT_SIZE):
-    return get_text_center_tuple(x,y,text,font,fontsize)
+def get_text_right_tuple(x, y, text, font=DEFAULT_FONT):
+    text_width = 0
+    lines = text.split("\n")
+    for line in lines:
+        tmp_width, tmp_hieght = font.getsize(line)
+        if tmp_width > text_width:
+            text_width = tmp_width
+
+    draw_x = x - text_width
+
+    return (draw_x, y)
+
+def get_title_text_center_tuple(x, y, text, font=DEFAULT_TITLE_FONT):
+    return get_text_center_tuple(x,y,text,font)
     
 
 def draw_border(draw, x, y, width, height, thickness = 5):

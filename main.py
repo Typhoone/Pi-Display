@@ -38,9 +38,10 @@ def main():
     draw = ImageDraw.Draw(canvas)
 
     print_QOD(draw, minX, 1000, canvasWidth)
-    nzFeeds=["https://www.rnz.co.nz/rss/national.xml"]
+
+    nzFeeds=["https://www.rnz.co.nz/rss/national.xml", "https://www.stuff.co.nz/rss"]
     print_feeds(draw, minX+10, 1100, canvasWidth//2, nzFeeds, "New Zealand")
-    worldFeeds=["https://www.rnz.co.nz/rss/world.xml", "http://feeds.bbci.co.uk/news/rss.xml", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"]
+    worldFeeds=["https://www.rnz.co.nz/rss/world.xml", "http://feeds.bbci.co.uk/news/rss.xml", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml", "https://moxie.foxnews.com/feedburner/latest.xml"]
     print_feeds(draw, minX+canvasWidth//2, 1100, canvasWidth//2, worldFeeds, "World")
 
     display.draw_full(constants.DisplayModes.GC16)
