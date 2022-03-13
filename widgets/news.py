@@ -20,21 +20,24 @@ def getTime(publishedTime):
     date = date.astimezone(tz)
     return date
 
-def drawItem(draw, x, y, item):
-    lineLim = 40
+def drawItem(draw, x, y, entry):
+    lineLim = 38
+    numOfLines=5
     # pprint(item.nzTime.strftime("%a %H:%M %z"))
     # print("------")
-    feedInfo = concat(item.feedTitle, item.nzTime.strftime("%a %H:%M"))
-    title = textwrap.shorten(item.summary, lineLim*4, placeholder="...")
+    feedInfo = concat(entry.feedTitle, entry.localTime.strftime("%a %H:%M"))
+    title = textwrap.shorten(entry.summary, lineLim*numOfLines, placeholder="...")
     title = textwrap.fill(title, lineLim)
     draw.multiline_text((x,y), title, font=DEFAULT_FONT, align="left")
-    print(title)
-    print("------")
-    desc = textwrap.shorten(item.description, lineLim*2, placeholder="...")
+    # print(title)
+    # print("------")
+    numOfLines = title.count('\n')
+    ypos=y + (numOfLines+1.3)*DEFAULT_FONT_SIZE
+    draw.text((x, ypos), feedInfo, font=DEFAULT_FONT, align="left")
 
     return 4
 
-def getLatest(feeds, num = 5):
+def getLatest(feeds, num = 3):
     items = []
     for feed in feeds:
         NewsFeed = feedparser.parse(feed)
@@ -43,27 +46,27 @@ def getLatest(feeds, num = 5):
             entry.feedTitle = ' '.join(NewsFeed.feed.title.split()[:2])
             # TODO: guse this to get favicon
             entry.RSSlink = NewsFeed.feed.link
-            entry.nzTime=getTime(entry.published)
+            entry.localTime=getTime(entry.published)
             items.append(entry)
-    items.sort(key=lambda x: x.nzTime, reverse=True)
+    items.sort(key=lambda x: x.localTime, reverse=True)
 
     return items[0:num]
 
 
 def print_feeds(draw, x, y, width, feeds, title):
     itemsToPrint = getLatest(feeds)
-    xpos = x + 5
+    xpos = x
     ypos = y
 
     xy = get_title_text_center_tuple(x+width//2, ypos, title)
     draw.text(xy, title, font=DEFAULT_TITLE_FONT, align="center")
 
-    ypos = ypos + DEFAULT_TITLE_FONT_SIZE
+    ypos = ypos + DEFAULT_TITLE_FONT_SIZE + 10
 
     for item in itemsToPrint:
-        # print(item.feedTitle, item.title, item.published)
+        print(ypos)
         totalLines = drawItem(draw, xpos, ypos,item)
-        ypos = ypos + (totalLines * DEFAULT_TITLE_FONT_SIZE)
+        ypos = ypos + 230
             
 
 

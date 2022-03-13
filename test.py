@@ -33,9 +33,10 @@ def main():
 
     print_QOD(draw, minX, 1000, canvasWidth)
 
-    feeds=["https://www.rnz.co.nz/rss/world.xml", "http://feeds.bbci.co.uk/news/rss.xml", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"]
-    # feeds=["https://www.rnz.co.nz/rss/world.xml"]
-    print_feeds(draw, minX, 1100, canvasWidth//2, feeds, "Test")
+    nzFeeds=["https://www.rnz.co.nz/rss/national.xml"]
+    print_feeds(draw, minX+10, 1100, canvasWidth//2, nzFeeds, "New Zealand")
+    worldFeeds=["https://www.rnz.co.nz/rss/world.xml", "http://feeds.bbci.co.uk/news/rss.xml", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"]
+    print_feeds(draw, minX+canvasWidth//2, 1100, canvasWidth//2, worldFeeds, "World")
 
 
     print("Saving Image...")
