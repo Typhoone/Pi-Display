@@ -129,5 +129,6 @@ dmypy.json
 .pyre/
 
 
-# Testing image
+# Testing data
 display.png
+weatherjson.data

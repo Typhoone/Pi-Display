@@ -8,6 +8,8 @@ import argparse
 from widgets.hello_world import *
 from widgets.quote_of_the_day import print_QOD
 from widgets.news import print_feeds
+from widgets.weather import print_weather
+from widgets.header import print_header
 
 minX=30
 minY=10
@@ -27,10 +29,10 @@ def main():
     canvas = Image.new('1', (canvasWidth, canvasHeight), WHITE)
     draw = ImageDraw.Draw(canvas)
 
-    draw.rectangle([minX,minY,maxX,maxY],outline=BLACK)
 
     # print_hello_world_centered(draw, canvasWidth//2, canvasHeight//2, "I keep asking myself these three questions.. What do you have? What do")
 
+    print_header(draw, minX, minY, canvasWidth)
     print_QOD(draw, minX, 1000, canvasWidth)
 
     nzFeeds=["https://www.rnz.co.nz/rss/national.xml", "https://www.stuff.co.nz/rss"]
@@ -38,7 +40,10 @@ def main():
     worldFeeds=["https://www.rnz.co.nz/rss/world.xml", "http://feeds.bbci.co.uk/news/rss.xml", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml", "https://moxie.foxnews.com/feedburner/latest.xml"]
     print_feeds(draw, minX+10+canvasWidth//2, 1100, canvasWidth//2, worldFeeds, "World")
 
+    print_weather(canvas, draw, minX + canvasWidth//2 - 325, minY+70, -41.2866, 174.7756, "foobar")
 
+
+    draw.rectangle([minX,minY,maxX,maxY],outline=BLACK)
     print("Saving Image...")
     canvas.save("display.png")
     
