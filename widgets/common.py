@@ -44,4 +44,3 @@ def draw_border(draw, x, y, width, height, thickness = 5):
     xy=[(x,y),(x+width, y+height)]
     draw.rectangle(xy, width=thickness)
 
-

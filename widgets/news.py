@@ -23,7 +23,7 @@ def getTime(publishedTime):
 def drawItem(draw, x, y, entry, width, lineLim = 38, numOfLines=4):
     # pprint(item.nzTime.strftime("%a %H:%M %z"))
     # print("------")
-    feedInfo = " ".join([entry.feedTitle, entry.localTime.strftime("%a %H:%M")])
+    feedInfo = " ".join([entry.feedTitle, entry.localTime.strftime("%H:%M")])
     title = textwrap.shorten(entry.summary, lineLim*numOfLines, placeholder="...")
     title = textwrap.fill(title, lineLim)
     draw.multiline_text((x,y), title, font=DEFAULT_FONT, align="left")
