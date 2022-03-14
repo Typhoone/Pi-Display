@@ -4,6 +4,7 @@ from operator import concat
 from pprint import pprint
 from PIL import Image
 from widgets.common import *
+import requests
 
 weather_module_width=650
 
@@ -35,8 +36,19 @@ def get_weather_mock(lat, long, apikey):
     f = open('weatherdata.json')
     return json.load(f)
 
-def print_weather(canvas, draw,x, y, lat, long, apikey):
-    data = get_weather_mock(lat, long, apikey)
+def get_weather(lat, lon, apikey):
+    reqURL="https://api.openweathermap.org/data/2.5/onecall?lat="+ str(lat) +"&lon=" + str(lon) + "&units=metric&appid=" + str(apikey)
+    print(reqURL)
+    res = requests.get(reqURL)
+    if (res.status_code==200):
+        jsonRes=res.json()
+        return jsonRes
+    else:
+        print("Error getting Weather data: ", res.status_code)
+        return get_weather_mock(lat, lon, apikey)
+
+def print_weather(canvas, draw,x, y, lat, lon, apikey):
+    data = get_weather(lat, lon, apikey)
     # pprint(data['current'])
     draw_current(canvas, draw, x, y, data)
     return 0
