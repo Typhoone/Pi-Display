@@ -28,7 +28,7 @@ def process_QOD():
     qod = quote["quote"]
     qodAuthor = quote["author"]
     date = datetime.strptime(quote['date'], '%Y-%m-%d').strftime('%d/%m/%y')
-    authourText = "~~ " + qodAuthor + " " + date + " ~~"
+    authourText = "~~ " + qodAuthor + " ~~"
 
     lineLim = 70
     qod = textwrap.shorten(qod, lineLim*3, placeholder="...")

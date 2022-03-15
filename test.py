@@ -12,6 +12,8 @@ from widgets.quote_of_the_day import print_QOD
 from widgets.news import print_feeds
 from widgets.weather import print_weather
 from widgets.header import print_header
+from widgets.this_day_in_history import print_day
+
 
 minX=30
 minY=10
@@ -41,6 +43,16 @@ def main():
 
     print_header(draw, minX, minY, canvasWidth)
 
+    print_weather(canvas, draw, minX + canvasWidth//2 - 325, minY+70, config['weather']['lat'], config['weather']['lon'], config['weather']['apikey'])
+    lineOffset = 340
+    draw.line([minX + canvasWidth//2 - lineOffset, minY+100, minX + canvasWidth//2 - lineOffset, 650])
+    draw.line([minX + canvasWidth//2 + lineOffset, minY+100, minX + canvasWidth//2 + lineOffset, 650])
+
+
+    # This gona be this day in history
+    draw.line([minX+40, 680, maxX-40, 680])
+    print_day(draw, minX, 700, canvasWidth, config['dayInHistory']['token'], config['dayInHistory']['appName'])
+
     draw.line([minX+40, 880, maxX-40, 880])
     print_QOD(draw, minX, 900, canvasWidth)
 
@@ -49,7 +61,6 @@ def main():
     draw.line([canvasWidth//2, 1150, canvasWidth//2, maxY-50])
     print_feeds(draw, minX+10+canvasWidth//2, 1100, canvasWidth//2, config['news']['worldFeeds'].split(), "World")
 
-    print_weather(canvas, draw, minX + canvasWidth//2 - 325, minY+70, config['weather']['lat'], config['weather']['lon'], config['weather']['apikey'])
 
 
     draw.rectangle([minX,minY,maxX,maxY],outline=BLACK)
