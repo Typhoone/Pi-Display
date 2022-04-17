@@ -32,6 +32,7 @@ def main():
     
     schedule.every(5).minutes.do(updateDisplay, canvas=canvas, config=config, display=display)
     print("Update Display Scheduled")
+    updateDisplay(canvas, config, display)
 
     try:
         while True:
@@ -52,6 +53,4 @@ def updateDisplay(canvas, config, display):
     print("Update Complete")
 
 if __name__ == '__main__':
-    # TODO: looks like we should run every 5 minutes for news updates, pytho cron???
-    # https://stackoverflow.com/a/16786600
     main()

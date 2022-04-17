@@ -20,6 +20,7 @@ def main():
     
     schedule.every(10).seconds.do(updateDisplay, canvas=canvas, config=config)
     print("Update Display Scheduled")
+    updateDisplay(canvas, config)
 
     try:
         while True:
