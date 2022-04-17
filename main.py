@@ -2,6 +2,7 @@
 from time import sleep
 import argparse
 from PIL import Image, ImageDraw
+import configparser
 
 from IT8951 import constants
 from IT8951.display import AutoEPDDisplay
