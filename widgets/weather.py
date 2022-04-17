@@ -1,4 +1,5 @@
 
+from datetime import datetime
 import json
 from operator import concat
 from pprint import pprint
@@ -19,7 +20,7 @@ def draw_current(canvas, draw, x, y, data, unitSymbol="°ᶜ"):
     iconName = data['current']['weather'][0]['icon']
     iconFileName =  './assets/weather/' + iconName + '@4x.png'
     icon = Image.open(iconFileName)
-    canvas.paste(icon, (x, y), icon)
+    canvas.paste(icon, (x-30, y), icon)
     print(iconFileName)
 
     feelsLike = 'Feels like: ' + str(round(data['current']['feels_like'])) + unitSymbol
@@ -31,6 +32,36 @@ def draw_current(canvas, draw, x, y, data, unitSymbol="°ᶜ"):
     highLow = str(todaysLow) + unitSymbol + " ▽ |" + str(todaysHigh) +  unitSymbol+" ▲"
     xy = get_text_center_tuple(x+weather_module_width//2, y+100, highLow)
     draw.text(xy, highLow, font=DEFAULT_FONT)
+
+def draw_forecast(canvas, draw, x, y, data, unitSymbol="°ᶜ"):
+    dailyArr=data['daily']
+    forecastWidth = 650
+    forecastSep = forecastWidth//7
+    # Skip first day as that is today
+    for idx, day in enumerate(dailyArr[1:8]):
+        dayName = datetime.utcfromtimestamp(day['dt']).strftime('%a')
+        dayLow = round(day['temp']['min'])
+        dayHigh = round(day['temp']['max'])
+        # Day
+        print(dayName, str(dayLow), str(dayHigh), idx)
+        xy = get_text_center_tuple(x+((idx+0.5)*forecastSep), y, dayName)
+        draw.text(xy, dayName, font=DEFAULT_FONT)
+
+        # Separator
+        if idx > 0 and idx < 7:
+            draw.line([x+(idx*forecastSep), y, x+(idx*forecastSep), y+130])
+        dayHighLowStr = str(dayLow) + "|" + str(dayHigh)
+
+        # symbol
+        iconName = day['weather'][0]['icon']
+        iconFileName =  './assets/weather/' + iconName + '@2x.png'
+        icon = Image.open(iconFileName)
+        canvas.paste(icon, (x+((idx)*forecastSep), y+10), icon)
+
+        # High Low
+        xy = get_text_center_tuple(x+((idx+0.5)*forecastSep), y+90, dayHighLowStr)
+        draw.text(xy, dayHighLowStr, font=DEFAULT_FONT)
+
 
 def get_weather_mock(lat, long, apikey):
     f = open('weatherdata.json')
@@ -48,7 +79,10 @@ def get_weather(lat, lon, apikey):
         return get_weather_mock(lat, lon, apikey)
 
 def print_weather(canvas, draw,x, y, lat, lon, apikey):
+    print("Weather begin")
     data = get_weather(lat, lon, apikey)
     # pprint(data['current'])
     draw_current(canvas, draw, x, y, data)
+    draw_forecast(canvas, draw, x, y+160, data)
+    print("Weather End")
     return 0
