@@ -21,6 +21,9 @@ WHITE=255
 
 def drawLayout(canvas, config):
     draw = ImageDraw.Draw(canvas)
+    draw.rectangle([minX,minY,maxX,maxY], fill=WHITE)
+    draw.rectangle([minX,minY,maxX,maxY],outline=BLACK)
+
     print_header(draw, minX, minY, canvasWidth)
 
     print_weather(canvas, draw, minX + canvasWidth//2 - 325, minY+70, config['weather']['lat'], config['weather']['lon'], config['weather']['apikey'])
@@ -39,7 +42,6 @@ def drawLayout(canvas, config):
     draw.line([canvasWidth//2, 1150, canvasWidth//2, maxY-50])
     print_feeds(draw, minX+10+canvasWidth//2, 1100, canvasWidth//2, config['news']['worldFeeds'].split(), "World")
 
-    draw.rectangle([minX,minY,maxX,maxY],outline=BLACK)
 
 def testCanvas():
     return Image.new('1', (canvasWidth+50, canvasHeight+50), WHITE)
