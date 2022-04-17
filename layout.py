@@ -10,8 +10,8 @@ from widgets.this_day_in_history import print_day
 
 minX=30
 minY=10
-maxX=1345
-maxY=1840
+maxX=1375
+maxY=1850
 boarderFrameWidth=10
 canvasWidth=maxX-minX
 canvasHeight = maxY - minY
@@ -42,4 +42,4 @@ def drawLayout(canvas, config):
     draw.rectangle([minX,minY,maxX,maxY],outline=BLACK)
 
 def testCanvas():
-    return Image.new('1', (canvasWidth, canvasHeight), WHITE)
+    return Image.new('1', (canvasWidth+50, canvasHeight+50), WHITE)
