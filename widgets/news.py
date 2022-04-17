@@ -22,7 +22,7 @@ def getTime(publishedTime):
 
 def drawItem(draw, x, y, entry, width, lineLim = 38, numOfLines=4):
     # pprint(item.nzTime.strftime("%a %H:%M %z"))
-    print("------")
+    # print("------")
     # print(entry.feedTitle)
     # print(entry.summary)
     feedInfo = " ".join([entry.feedTitle, entry.localTime.strftime("%H:%M")])
@@ -38,6 +38,7 @@ def drawItem(draw, x, y, entry, width, lineLim = 38, numOfLines=4):
     return numOfLines+1
 
 def getLatest(feeds, num = 3):
+    print("Getting News from RSS feed")
     items = []
     for feed in feeds:
         NewsFeed = feedparser.parse(feed)
@@ -54,6 +55,7 @@ def getLatest(feeds, num = 3):
 
 
 def print_feeds(draw, x, y, width, feeds, title):
+    print("Getting News for ", title)
     itemsToPrint = getLatest(feeds)
     xpos = x
     ypos = y
@@ -64,7 +66,7 @@ def print_feeds(draw, x, y, width, feeds, title):
     ypos = ypos + DEFAULT_TITLE_FONT_SIZE + 10
 
     for item in itemsToPrint:
-        print(ypos)
+        # print(ypos)
         totalLines = drawItem(draw, xpos, ypos,item, width)
         ypos = ypos + 230
             

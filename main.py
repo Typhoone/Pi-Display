@@ -15,6 +15,8 @@ from widgets.weather import print_weather
 from widgets.header import print_header
 from widgets.this_day_in_history import print_day
 
+display = None
+
 minX=30
 minY=10
 maxX=1345
@@ -58,7 +60,7 @@ def main():
     print_day(draw, minX, 700, canvasWidth, config['dayInHistory']['token'], config['dayInHistory']['appName'])
 
     draw.line([minX+40, 880, maxX-40, 880])
-    print_QOD(draw, minX, 1000, canvasWidth)
+    print_QOD(draw, minX, 900, canvasWidth)
 
     draw.line([minX+40, 1080, maxX-40, 1080])
     print_feeds(draw, minX+10, 1100, canvasWidth//2, config['news']['localFeeds'].split(), config['news']['localFeedsName'])
@@ -70,7 +72,9 @@ def main():
     print('Done!')
 
     sleep(60)
-    display.clear()
+    
 
 if __name__ == '__main__':
-    main()
+    for i in range(5):
+        main()
+    display.clear()

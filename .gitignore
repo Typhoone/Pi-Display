@@ -128,10 +128,13 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Pi-Display filess
+config.ini
+QOD-cache*.json
+day-in-history-cache-*.json
 
 # Testing data
 display.png
 weatherdata.json
 QOD_mock.json
-config.ini
 go.sh

@@ -1,13 +1,16 @@
 from datetime import datetime
 import json
 from pprint import pprint
+import sys
 import textwrap
 import requests
 from widgets.common import *
+from os.path import exists
 
+DAYFILE = "./day-in-history-cache-"
 
 def get_day(API_KEY, APP_NAME):
-    print("Getting day")
+    print("Getting day in History from API")
 
     today = datetime.now()
     date = today.strftime('%m/%d')
@@ -26,14 +29,28 @@ def get_day(API_KEY, APP_NAME):
         return jsonRes
     else:
         print("Error getting day: ", res.status_code)
-        return {"quote": "Error Retirving day", "length": 19, "author": res.status_code} 
+        sys.exit("Failed to get This Day in History")
+
+def get_day_cache(API_KEY, APP_NAME):
+    today = datetime.date(datetime.now())
+    filename = DAYFILE + str(today) + ".json"
+    print(filename)
+    if (exists(filename)):
+        print("Pulling Day in History from cache file")
+        f = open(filename)
+        return json.load(f)
+    else:
+        QOD = get_day(API_KEY, APP_NAME)
+        f = open(filename, "x")
+        json.dump(QOD, f)
+        return QOD
 
 def get_day_mock(API_KEY, APP_NAME):
     f = open('day_mock.json')
     return json.load(f)
 
 def process_day(API_KEY, APP_NAME):
-    dayJSON = get_day(API_KEY, APP_NAME)
+    dayJSON = get_day_cache(API_KEY, APP_NAME)
     thisDay = dayJSON['selected'][0]
     dayText = thisDay["text"]
     dayExtract = thisDay["pages"][0]['extract']

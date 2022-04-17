@@ -2,13 +2,17 @@ from datetime import datetime
 import json
 from operator import concat
 from pprint import pprint
+import sys
 import textwrap
 import requests
 from widgets.common import *
+from os.path import exists
+
+QODFILE = "./QOD-cache-"
 
 
 def get_qod():
-    print("Getting QOD")
+    print("Getting QOD from API")
     res = requests.get("https://quotes.rest/qod?language=en")
     if (res.status_code==200):
         jsonRes=res.json()
@@ -16,14 +20,29 @@ def get_qod():
         return jsonRes
     else:
         print("Error getting QOD: ", res.status_code==200)
-        return {"quote": "Error Retirving QOD", "length": 19, "author": res.status_code} 
+        sys.exit("QOD can not load for some reason")
+
+def get_qod_cache():
+    today = datetime.date(datetime.now())
+    filename = QODFILE + str(today) + ".json"
+    print(filename)
+    if (exists(filename)):
+        print("Pulling QOD from cache file")
+        f = open(filename)
+        return json.load(f)
+    else:
+        QOD = get_qod()
+        f = open(filename, "x")
+        json.dump(QOD, f)
+        return QOD
 
 def get_qod_mock():
+    print('Pullinng QOD from Mock')
     f = open('QOD_mock.json')
     return json.load(f)
 
 def process_QOD():
-    qodJSON = get_qod_mock()
+    qodJSON = get_qod_cache()
     quote = qodJSON["contents"]["quotes"][0]
     qod = quote["quote"]
     qodAuthor = quote["author"]
