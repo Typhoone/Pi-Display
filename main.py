@@ -49,7 +49,7 @@ def updateDisplay(canvas, config, display):
     print("Updating Display...")
     drawLayout(canvas, config)
     print("Displaying Image...")
-    display.draw_partial(constants.DisplayModes.GC16)
+    display.draw_full(constants.DisplayModes.GC16)
     print("Update Complete")
 
 if __name__ == '__main__':
