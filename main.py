@@ -2,6 +2,7 @@ from time import sleep
 from pprint import pprint
 import argparse
 import configparser
+import schedule
 
 from layout import drawLayout
 
@@ -27,19 +28,28 @@ def main():
 
     print('Initializing buffer...')
     canvas = display.frame_buf
+    print("Initialised")
     
+    schedule.every(5).minutes.do(updateDisplay, canvas=canvas, config=config, display=display)
+    print("Update Display Scheduled")
 
-    drawLayout(canvas, config)
-    
+    try:
+        while True:
+            schedule.run_pending()
+            sleep(30)
+    except KeyboardInterrupt:
+        print('interrupted!')
 
-    # TODO: this will only work if we dont initialise it every time - fix it geirden
-    display.draw_partial(constants.DisplayModes.GC16)
-
+    sleep(5)
+    display.clear()
     print('Done!')
 
-    sleep(60)
-    
-    display.clear()
+def updateDisplay(canvas, config, display):
+    print("Updating Display...")
+    drawLayout(canvas, config)
+    print("Displaying Image...")
+    display.draw_partial(constants.DisplayModes.GC16)
+    print("Update Complete")
 
 if __name__ == '__main__':
     # TODO: looks like we should run every 5 minutes for news updates, pytho cron???
