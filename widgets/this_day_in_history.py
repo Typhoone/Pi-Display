@@ -6,6 +6,8 @@ import textwrap
 import requests
 from widgets.common import *
 from os.path import exists
+from os import remove
+from glob import glob
 
 DAYFILE = "./day-in-history-cache-"
 
@@ -31,6 +33,15 @@ def get_day(API_KEY, APP_NAME):
         print("Error getting day: ", res.status_code)
         sys.exit("Failed to get This Day in History")
 
+def clean_old_files():
+    fileList = glob(DAYFILE + "*.json")
+    for filePath in fileList:
+        try:
+            print("Removing old file: ", filePath)
+            remove(filePath)
+        except:
+            print("Error while deleting file : ", filePath)
+
 def get_day_cache(API_KEY, APP_NAME):
     today = datetime.date(datetime.now())
     filename = DAYFILE + str(today) + ".json"
@@ -40,6 +51,7 @@ def get_day_cache(API_KEY, APP_NAME):
         f = open(filename)
         return json.load(f)
     else:
+        clean_old_files()
         QOD = get_day(API_KEY, APP_NAME)
         f = open(filename, "x")
         json.dump(QOD, f)

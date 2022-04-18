@@ -7,6 +7,8 @@ import textwrap
 import requests
 from widgets.common import *
 from os.path import exists
+from os import remove
+from glob import glob
 
 QODFILE = "./QOD-cache-"
 
@@ -22,6 +24,15 @@ def get_qod():
         print("Error getting QOD: ", res.status_code==200)
         sys.exit("QOD can not load for some reason")
 
+def clean_old_files():
+    fileList = glob(QODFILE + "*.json")
+    for filePath in fileList:
+        try:
+            print("Removing old file: ", filePath)
+            remove(filePath)
+        except:
+            print("Error while deleting file : ", filePath)
+
 def get_qod_cache():
     today = datetime.date(datetime.now())
     filename = QODFILE + str(today) + ".json"
@@ -31,6 +42,7 @@ def get_qod_cache():
         f = open(filename)
         return json.load(f)
     else:
+        clean_old_files()
         QOD = get_qod()
         f = open(filename, "x")
         json.dump(QOD, f)
@@ -65,6 +77,8 @@ def print_QOD(draw,x, y,  canvasWidth):
 
     xy = get_text_center_tuple(x +canvasWidth//2, y+DEFAULT_FONT_SIZE*4, qodOb[1])
     draw.multiline_text(xy, qodOb[1], font=DEFAULT_FONT, align="center")
+
+
     
 
 
