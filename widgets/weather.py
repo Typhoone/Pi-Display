@@ -20,7 +20,7 @@ def draw_current(canvas, draw, x, y, data, unitSymbol="°ᶜ"):
     iconName = data['current']['weather'][0]['icon']
     iconFileName =  './assets/weather/' + iconName + '@4x.png'
     icon = Image.open(iconFileName)
-    canvas.paste(icon, (x-30, y), icon)
+    canvas.paste(icon, (x+40, y), icon)
     print(iconFileName)
 
     feelsLike = 'Feels like: ' + str(round(data['current']['feels_like'])) + unitSymbol
@@ -49,17 +49,17 @@ def draw_forecast(canvas, draw, x, y, data, unitSymbol="°ᶜ"):
 
         # Separator
         if idx > 0 and idx < 7:
-            draw.line([x+(idx*forecastSep), y, x+(idx*forecastSep), y+130])
+            draw.line([x+(idx*forecastSep), y, x+(idx*forecastSep), y+150])
         dayHighLowStr = str(dayLow) + "|" + str(dayHigh)
 
         # symbol
         iconName = day['weather'][0]['icon']
         iconFileName =  './assets/weather/' + iconName + '@2x.png'
         icon = Image.open(iconFileName)
-        canvas.paste(icon, (x+((idx)*forecastSep), y+10), icon)
+        canvas.paste(icon, (x+15+((idx)*forecastSep), y+40), icon)
 
         # High Low
-        xy = get_text_center_tuple(x+((idx+0.5)*forecastSep), y+90, dayHighLowStr)
+        xy = get_text_center_tuple(x+((idx+0.5)*forecastSep), y+110, dayHighLowStr)
         draw.text(xy, dayHighLowStr, font=DEFAULT_FONT)
 
 
