@@ -7,6 +7,7 @@ DEFAULT_FONT = ImageFont.truetype(DEFAULT_FONT_PATH, DEFAULT_FONT_SIZE)
 DEFAULT_TITLE_FONT_SIZE = 50
 DEFAULT_TITLE_FONT = ImageFont.truetype(DEFAULT_FONT_PATH, DEFAULT_TITLE_FONT_SIZE)
 
+# Deprecated
 def draw_centered_text(draw, x, y, text, font=DEFAULT_FONT, fontsize=DEFAULT_FONT_SIZE):
     xy = get_text_center_tuple(x, y, text, font, fontsize)
     draw.text(xy, text, font=font)
